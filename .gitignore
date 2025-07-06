@@ -1,6 +1,7 @@
 # Local .terraform directories (Terraform state and cache)
 **/.terraform/
 *.lock.hcl
+*.plan
 
 # Terraform state files
 *.tfstate
