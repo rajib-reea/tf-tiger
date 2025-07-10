@@ -18,6 +18,12 @@ Destory Infrastructure:
 1. terraform destroy -auto-approve
 ```
 Run an Application on ECS:
+```
+Need to remember-
+Subnets define where resources are placed in the VPC (e.g., availability zone, IP range).
+and
+Security groups define what traffic is allowed to/from resources, regardless of subnet.
+```
 A. Provider
 ```
 1. First we make provider. In our case this is aws provider.
