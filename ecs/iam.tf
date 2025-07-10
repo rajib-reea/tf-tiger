@@ -1,4 +1,15 @@
-# 👥 Trust relationship document shared by both roles
+# 🔍 Get AWS account ID and region dynamically
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
+
+# 📦 Input variable for your secret name prefix
+variable "secret_name" {
+  description = "Prefix of the secret in AWS Secrets Manager"
+  type        = string
+}
+
+# 👥 Trust relationship document shared by both ECS roles
 data "aws_iam_policy_document" "ecs_assume_role_policy" {
   statement {
     effect = "Allow"
@@ -34,16 +45,16 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   }
 }
 
-# 📦 Attach AWS-managed execution policy to allow logging, pulling images, etc.
+# 📎 Attach AWS-managed execution policy for ECS agent
 resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# 📦 Example: Attach a custom app policy to ecs_task_role (optional)
+# 🔐 Custom IAM policy allowing access to a specific secret and S3
 resource "aws_iam_policy" "app_access_policy" {
   name        = "ecsAppAccessPolicy"
-  description = "Allow access to specific AWS resources from ECS task"
+  description = "Allow access to S3 and a dynamic Secrets Manager secret"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -61,12 +72,13 @@ resource "aws_iam_policy" "app_access_policy" {
         Action = [
           "secretsmanager:GetSecretValue"
         ]
-        Resource = "arn:aws:secretsmanager:your-region:your-account-id:secret:your-secret-name-*"
+        Resource = "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:${var.secret_name}-*"
       }
     ]
   })
 }
 
+# 🔗 Attach the custom policy to the app (task) role
 resource "aws_iam_policy_attachment" "ecs_app_policy_attach" {
   name       = "AttachAppAccessPolicy"
   policy_arn = aws_iam_policy.app_access_policy.arn
