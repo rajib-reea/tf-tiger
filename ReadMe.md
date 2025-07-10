@@ -1,9 +1,9 @@
 0. Create Profile
 ```
 1. create/configure:
-aws configure --profile my-profile
+aws configure --profile infra-profile
 2. check:
-aws sts get-caller-identity --profile my-profile
+aws sts get-caller-identity --profile infra-profile
 ```
 
 I. Ready an EC2 Infrastructure:
