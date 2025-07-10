@@ -17,7 +17,7 @@ Destory Infrastructure:
 ```
 1. terraform destroy -auto-approve
 ```
-ECS:
+Run an Application on ECS:
 A. Provider
 ```
 1. First we make provider. In our case this is aws provider.
@@ -56,4 +56,12 @@ D. IAM:
 5. Attach Task Execution Role with ECS Assume Role Policy Document
 6. Make a Policy to attach App Access
 7. Attach Task Role with App Policy
+```
+
+E. ECS
+```
+1. Create ECS Cluster
+2. Create a Task Definition
+3. Create ECS Service
+```
 ```
