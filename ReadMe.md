@@ -1,3 +1,11 @@
+0. Create Profile
+```
+1. create/configure:
+aws configure --profile my-profile
+2. check:
+aws sts get-caller-identity --profile my-profile
+```
+
 I. Ready an EC2 Infrastructure:
 ```
 1. terraform is installed
