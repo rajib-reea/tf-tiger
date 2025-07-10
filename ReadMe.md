@@ -43,7 +43,7 @@ C. Routing:
 1. Create Public Route Table
 2. Create Private Route Table
 3. Attach IG with Public Route Table- a Public Route
-4.  Attach NG with Private Route Table- a Private Route
+4. Attach NG with Private Route Table- a Private Route
 5. Attach Public Route with nat, alb_1 and alb_2
 6. Attach Private Route with app
 ```
