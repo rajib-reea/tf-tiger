@@ -60,7 +60,7 @@ D. IAM:
 
 F. ECS
 ```
-1. Create ECS Cluster
+1. Create ECS Cluster (this involves setting)
 2. Create a Task Definition (this involves container_definitions)
 [
 network_mode = "awsvpc" requires_compatibilities = ["FARGATE"] for fargate
