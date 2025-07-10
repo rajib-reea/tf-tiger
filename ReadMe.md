@@ -52,6 +52,16 @@ D. Security Group:
 ```
 1. Create Security Group for alb
 2. Create Security Group for app
+[
+we can restrict app access only from alb
+ingress {
+  from_port       = 3000
+  to_port         = 3000
+  protocol        = "tcp"
+  security_groups = [aws_security_group.alb.id]
+}
+
+]
 ```
 
 E. IAM:
