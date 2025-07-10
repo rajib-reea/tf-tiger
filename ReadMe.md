@@ -47,7 +47,14 @@ C. Routing:
 5. Attach Public Route with nat, alb_1 and alb_2
 6. Attach Private Route with app
 ```
-D. IAM:
+
+D. Security Group:
+```
+1. Create Security Group for alb
+2. Create Security Group for app
+```
+
+E. IAM:
 ```
 1. Make Policy Document for ECS Assume Role
 2. Make Policy Document for App Access
