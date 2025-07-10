@@ -1,10 +1,10 @@
-Ready an EC2 Infrastructure:
+I. Ready an EC2 Infrastructure:
 ```
 1. terraform is installed
 2. aws cli is installed
 ```
 
-Create Infrastructure:
+A. Create Infrastructure:
 ```
 1. terraform init
 2. terraform fmt
@@ -13,11 +13,12 @@ Create Infrastructure:
 5. terraform apply infra.plan
 ```
 
-Destory Infrastructure:
+B. Destory Infrastructure:
 ```
 1. terraform destroy -auto-approve
 ```
-Run an Application on ECS:
+
+II. Run an Application on ECS:
 ```
 Need to remember-
 1. Subnets define where resources are placed in the VPC (e.g., availability zone, IP range).
