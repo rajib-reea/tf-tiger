@@ -55,5 +55,5 @@ D. IAM:
 4. Create Task Execution Role
 5. Attach Task Execution Role with ECS Assume Role Policy Document
 6. Make a Policy to attach App Access
-7. Attach App Policy
+7. Attach Task Role with App Policy
 ```
