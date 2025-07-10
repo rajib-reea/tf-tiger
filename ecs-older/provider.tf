@@ -1,12 +1,13 @@
 provider "aws" {
-  region  = "us-east-1"
-  profile = "infra-profile"
+  region              = "us-east-1"
+  profile             = "infra-profile"
+  allowed_account_ids = ["put-your-id-here"]
 
   default_tags {
     tags = {
       Environment = "Sandbox"
       ManagedBy   = "Terraform"
-      tfstate     = "infra/terraform.tfstate"
+      tfstate     = "aws-my-app/terraform.tfstate"
     }
   }
 }
@@ -21,15 +22,13 @@ terraform {
     }
   }
 
-  # backend "local" {}
-
   backend "s3" {
     profile      = "infra-profile"
     region       = "us-east-1"
-    bucket       = "terra-infra-s3"
+    bucket       = "infra"
     use_lockfile = true
     encrypt      = true
-    kms_key_id   = "kms_key_id"
-    key          = "infra/terraform.tfstate"
+    kms_key_id   = "kms-key-id"
+    key          = "aws-my-app/terraform.tfstate"
   }
 }

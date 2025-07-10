@@ -45,16 +45,36 @@ Internet Gateway(IG) and NAT Gateway(NG) are VPC-wide networking components — 
 and
 ALB and App are ENI-based. Therfore, ALB and App need Security Groups while IG and NG do not need.
 ```
+
+Create KMS Key:
+```
+aws kms create-key --description "Infra KMS key" --region us-east-1 --profile infra-profile
+aws secretsmanager list-secrets --profile infra-profile --query "SecretList[*].Name" --output text
+[the above command is to get key name prefix. in my case i have not get any prefix.]
+
+```
+
+Create S3 Bucket:
+```
+aws s3api create-bucket --bucket infra-s3 --profile infra-profile
+[
+for us-east-1; unfortunately it does not work because this region is a special region. I  have created manually.
+]
+aws s3api create-bucket --bucket infra-s3 --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2 --profile infra-profile
+[for any other region except us-east-1; create-bucket-configuration is a must requirement.]
+```
+See AZs:
+```
+aws ec2 describe-availability-zones --region us-east-1 --profile infra-profile --query "AvailabilityZones[*].ZoneName" --output text
+```
+
 A. Provider
 ```
-1. First we make provider. In our case this is aws provider.
-We can make KMS Key programmatically using Terraform that will be used in backend.
-The problem is backend is being used during terraform initialization.
-Therefore, we can break the provider code into-
-bootstrap
-main
-and then use a shell script to make the provider.
-Or we can use provider.tf directly after manually creating KMS Key.
+1. Create provider
+run: terraform init
+[
+As KMS key is a secret, we do not like to hardcode it.
+]
 ```
 
 B. VPC and Subnet:
@@ -95,6 +115,9 @@ E. ALB:
 1. Create alb
 2. Create a Listener for alb
 3. Create a Target Group for alb (target_type=ip for fargate and target_type=instance for ec2)
+run to get alb dns name:
+aws elbv2 describe-load-balancers --query 'LoadBalancers[*].DNSName' --region us-east-1 --profile infra-profile
+curl alb_dns_name
 ```
 
 F. IAM:
@@ -121,4 +144,14 @@ network_mode = "bridge" requires_compatibilities = ["EC2"] for ec2
 launch_type = "FARGATE" for fargate
 launch_type = "EC2" for ec2
 ]
+run:
+check tasks: aws ecs describe-services --cluster hello-world --services web --profile infra-profile
+check failed tasks: aws ecs describe-tasks --cluster hello-world --tasks $(aws ecs list-tasks --cluster hello-world --service web --query 'taskArns' --output text --profile infra-profile) --profile infra-profile
+check alb health: aws elbv2 describe-target-health \
+  --target-group-arn $(aws elbv2 describe-target-groups \
+    --names your-target-group-name \
+    --query 'TargetGroups[0].TargetGroupArn' \
+    --output text \
+    --profile infra-profile) \
+  --profile infra-profile
 ```

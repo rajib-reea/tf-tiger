@@ -16,11 +16,18 @@ resource "aws_nat_gateway" "main" {
   depends_on    = [aws_internet_gateway.main]
 }
 
+resource "aws_subnet" "app" {
+  vpc_id = aws_vpc.main.id
+
+  availability_zone = "us-east-1a"
+  cidr_block        = "10.1.110.0/24"
+}
+
 resource "aws_subnet" "nat" {
   vpc_id = aws_vpc.main.id
 
   availability_zone = "us-east-1a"
-  cidr_block        = "10.1.101.0/24"
+  cidr_block        = "10.1.100.0/24"
 
   map_public_ip_on_launch = true
 }
@@ -29,7 +36,7 @@ resource "aws_subnet" "alb_a" {
   vpc_id = aws_vpc.main.id
 
   availability_zone = "us-east-1a"
-  cidr_block        = "10.1.102.0/24"
+  cidr_block        = "10.1.4.0/24"
 
   map_public_ip_on_launch = true
 }
@@ -38,14 +45,7 @@ resource "aws_subnet" "alb_c" {
   vpc_id = aws_vpc.main.id
 
   availability_zone = "us-east-1c"
-  cidr_block        = "10.1.103.0/24"
+  cidr_block        = "10.1.5.0/24"
 
   map_public_ip_on_launch = true
-}
-
-resource "aws_subnet" "app" {
-  vpc_id = aws_vpc.main.id
-
-  availability_zone = "us-east-1a"
-  cidr_block        = "10.1.104.0/24"
 }

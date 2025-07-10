@@ -44,8 +44,8 @@ resource "aws_ecs_task_definition" "main" {
 
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  task_role_arn            = aws_iam_role.ecs_task_role.arn
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task.arn
+  execution_role_arn       = aws_iam_role.ecs_task_execution.arn
 
   container_definitions = jsonencode([{
     name      = "hello-world"
@@ -57,24 +57,4 @@ resource "aws_ecs_task_definition" "main" {
       containerPort = 3000
     }]
   }])
-}
-
-# Target Group
-resource "aws_lb_target_group" "main" {
-  name        = "hello-world-tg"
-  port        = 3000
-  protocol    = "HTTP"
-  target_type = "ip"
-  vpc_id      = aws_vpc.main.id
-
-  health_check {
-    path                = "/"  # The hello-world container responds on root path
-    interval            = 30
-    timeout             = 5
-    healthy_threshold   = 3
-    unhealthy_threshold = 3
-    matcher             = "200-399"
-  }
-
-  depends_on = [aws_lb.main]
 }
