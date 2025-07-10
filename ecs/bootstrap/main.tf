@@ -1,5 +1,5 @@
 provider "aws" {
-  profile = "your-profile"
+  profile = "infra-profile"
   region  = "us-east-1"
 }
 
