@@ -58,10 +58,15 @@ D. IAM:
 7. Attach Task Role with App Policy
 ```
 
-E. ECS
+F. ECS
 ```
 1. Create ECS Cluster
-2. Create a Task Definition
-3. Create ECS Service
+2. Create a Task Definition (this involves container_definitions)
+[
+network_mode = "awsvpc" requires_compatibilities = ["FARGATE"] for fargate
+network_mode = "bridge" requires_compatibilities = ["EC2"] for ec2
+]
+3. Create ECS Service (this involves network_configuration, load_balancer and lifecycle)
+[
 ```
 ```
