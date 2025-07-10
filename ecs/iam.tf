@@ -54,29 +54,11 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
 # 🔐 Custom IAM policy allowing access to a specific secret and S3
 resource "aws_iam_policy" "app_access_policy" {
   name        = "ecsAppAccessPolicy"
-  description = "Allow access to S3 and a dynamic Secrets Manager secret"
+  description = "Allow access to S3 and Secrets Manager"
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:GetObject",
-          "s3:PutObject"
-        ]
-        Resource = "arn:aws:s3:::your-app-bucket/*"
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "secretsmanager:GetSecretValue"
-        ]
-        Resource = "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:${var.secret_name}-*"
-      }
-    ]
-  })
+  policy = data.aws_iam_policy_document.app_access.json
 }
+
 
 # 🔗 Attach the custom policy to the app (task) role
 resource "aws_iam_policy_attachment" "ecs_app_policy_attach" {
