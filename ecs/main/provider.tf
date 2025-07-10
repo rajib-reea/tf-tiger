@@ -14,7 +14,7 @@ terraform {
   }
 
   backend "s3" {
-    profile      = "your-profile"
+    profile      = "infra-profile"
     region       = "us-east-1"
     bucket       = "infra-tfstate"
     encrypt      = true
