@@ -20,9 +20,21 @@ Destory Infrastructure:
 Run an Application on ECS:
 ```
 Need to remember-
-Subnets define where resources are placed in the VPC (e.g., availability zone, IP range).
+1. Subnets define where resources are placed in the VPC (e.g., availability zone, IP range).
 and
 Security groups define what traffic is allowed to/from resources, regardless of subnet.
+
+2. A Security Group (SG) is a stateful virtual firewall that:
+
+Controls inbound and outbound traffic
+
+Is attached to ENI-based resources like EC2, ECS tasks (Fargate), Load Balancers, RDS, etc.
+
+Operates at the instance level
+
+Internet Gateway(IG) and NAT Gateway(NG) are VPC-wide networking components — not ENI-based instances
+and
+ALB and App are ENI-based. Therfore, ALB and App need Security Groups while IG and NG do not need.
 ```
 A. Provider
 ```
