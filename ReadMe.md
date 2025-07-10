@@ -1,4 +1,4 @@
-Make sure-
+Ready an EC2 Infrastructure:
 ```
 1. terraform is installed
 2. aws cli is installed
