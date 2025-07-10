@@ -31,18 +31,18 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   }
 }
 
-# 📎 Attach AWS-managed execution policy for ECS agent
-resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
-  role       = aws_iam_role.ecs_task_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-}
-
 # 🔐 Custom IAM policy allowing access to a specific secret and S3
 resource "aws_iam_policy" "app_access_policy" {
   name        = "ecsAppAccessPolicy"
   description = "Allow access to S3 and Secrets Manager"
 
   policy = data.aws_iam_policy_document.app_access.json
+}
+
+# 📎 Attach AWS-managed execution policy for ECS agent
+resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
+  role       = aws_iam_role.ecs_task_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 
