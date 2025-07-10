@@ -1,6 +1,17 @@
+locals {
+  default_tags = {
+    Environment = "Sandbox"
+    ManagedBy   = "Terraform"
+    tfstate     = "sre-interview/rajib-pavel.tfstate"
+  }
+}
+
 provider "aws" {
   profile = "infra-profile"
   region  = "us-east-1"
+  default_tags {
+    tags = local.default_tags
+  }
 }
 
 resource "aws_kms_key" "terraform_state" {
