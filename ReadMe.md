@@ -82,8 +82,14 @@ ingress {
 
 ]
 ```
+E. ALB:
+```
+1. Create alb
+2. Create a Listener for alb
+3. Create a Target Group for alb
+```
 
-E. IAM:
+F. IAM:
 ```
 1. Make Policy Document for ECS Assume Role
 2. Make Policy Document for App Access
@@ -94,7 +100,7 @@ E. IAM:
 7. Attach Task Role with App Policy
 ```
 
-F. ECS
+G. ECS
 ```
 1. Create ECS Cluster (this involves setting)
 2. Create a Task Definition (this involves container_definitions)
