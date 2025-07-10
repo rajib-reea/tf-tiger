@@ -68,5 +68,7 @@ network_mode = "bridge" requires_compatibilities = ["EC2"] for ec2
 ]
 3. Create ECS Service (this involves network_configuration, load_balancer and lifecycle)
 [
-```
+launch_type = "FARGATE" for fargate
+launch_type = "EC2" for ec2
+]
 ```
