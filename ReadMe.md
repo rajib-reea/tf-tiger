@@ -86,7 +86,7 @@ E. ALB:
 ```
 1. Create alb
 2. Create a Listener for alb
-3. Create a Target Group for alb
+3. Create a Target Group for alb (target_type=ip for fargate and target_type=instance for ec2)
 ```
 
 F. IAM:
