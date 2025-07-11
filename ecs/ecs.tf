@@ -58,23 +58,3 @@ resource "aws_ecs_task_definition" "main" {
     }]
   }])
 }
-
-# Target Group
-resource "aws_lb_target_group" "main" {
-  name        = "hello-world-tg"
-  port        = 3000
-  protocol    = "HTTP"
-  target_type = "ip"
-  vpc_id      = aws_vpc.main.id
-
-  health_check {
-    path                = "/"  # The hello-world container responds on root path
-    interval            = 30
-    timeout             = 5
-    healthy_threshold   = 3
-    unhealthy_threshold = 3
-    matcher             = "200-399"
-  }
-
-  depends_on = [aws_lb.main]
-}
