@@ -124,11 +124,10 @@ F. IAM:
 ```
 1. Make Policy Document for ECS Assume Role
 2. Make Policy Document for App Access
-3. Create Task Role
-4. Create Task Execution Role
-5. Attach Task Execution Role with ECS Assume Role Policy Document
-6. Make a Policy to attach App Access
-7. Attach Task Role with App Policy
+3. Make a Policy to attach App Access
+4. Create Task Role
+5. Create Task Execution Role
+6. Attach Task Execution Role with ECS Assume Role Policy Document
 ```
 
 G. ECS
